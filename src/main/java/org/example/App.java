@@ -3,31 +3,46 @@ package org.example;
 
 import java.util.Scanner;
 
-public class App 
+public class App
 {
+    /*public boolean test (Dog dog1, Dog dog2) {
+        boolean eq;
+        return eq;
+    }*/
+
+
     public static void main( String[] args )
     {
         Dog dog1 = new Dog();
+        Owner owner1 = new Owner();
         dog1.nickname = "Belka";
         dog1.age = 5;
-        dog1.owner = "Kostya";
-
+        owner1.FIO = "Kostya";
+        owner1.Adress = "Spb";
+        dog1.owner = owner1;
 
 
         Dog dog2 = new Dog();
-        dog2.nickname = "Strelka";
-        dog2.age = 7;
-        dog2.owner = "Dyadya";
+        Owner owner2 = new Owner();
+        dog2.nickname = "Belka";
+        dog2.age = 5;
+        owner2.FIO = "Kostya";
+        owner2.Adress = "Spb";
+        dog2.owner = owner2;
 
 
 
-        //System.out.println( dog1==dog2);
-        //System.out.println(dog1.equals(dog2));
+        //System.out.println( dog1.age==dog2.age);
+        //(dog1.age).equals(dog2.age);
 
-        String a = new String("Привет");
+
+
+
+
+/*        String a = new String("Привет");
         String b = new String("Привет");
         System.out.println(a == b);
-        System.out.println(a.equals(b));
+        System.out.println(a.equals(b));*/
 
 
 
