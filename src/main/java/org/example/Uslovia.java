@@ -35,7 +35,7 @@ public class Uslovia {
 
     }*/
 
-        Scanner scanner = new Scanner(System.in);
+/*         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите плз число");
         int num = scanner.nextInt();
         switch (num){
@@ -49,7 +49,7 @@ public class Uslovia {
                 System.out.println("Default");
 
         }
-
+*/
 
 }
 }

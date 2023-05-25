@@ -5,14 +5,22 @@ import java.util.Scanner;
 
 public class App
 {
-    /*public boolean test (Dog dog1, Dog dog2) {
-        boolean eq;
-        return eq;
-    }*/
+    public boolean test (Dog dog1, Dog dog2) {
+        boolean rq;
+        if (dog1==dog2){
+            rq = true;
+        }
+        else
+        {
+            rq = false;
+        }
+        return rq;
+    }
 
 
     public static void main( String[] args )
     {
+
         Dog dog1 = new Dog();
         Owner owner1 = new Owner();
         dog1.nickname = "Belka";
@@ -30,10 +38,20 @@ public class App
         owner2.Adress = "Spb";
         dog2.owner = owner2;
 
-
+        System.out.println();
 
         //System.out.println( dog1.age==dog2.age);
         //(dog1.age).equals(dog2.age);
+
+
+
+
+
+
+
+
+
+
 
 
 
