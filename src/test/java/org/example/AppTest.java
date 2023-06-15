@@ -8,13 +8,19 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
+import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.apache.http.HttpStatus.SC_NOT_FOUND;
-import static org.apache.http.HttpStatus.SC_OK;
+import static io.restassured.RestAssured.given;
+import static org.apache.http.HttpStatus.*;
+
+import lombok.*;
+
+
+
 /*import org.apache.Http;*/
 
 
@@ -25,14 +31,13 @@ import static org.apache.http.HttpStatus.SC_OK;
 
 public class AppTest {
 
+
+
     @BeforeClass
     public static void beforeClass() throws Exception {
-        RestAssured.filters(new RequestLoggingFilter(LogDetail.ALL), // отображать в консоли request
-                new ResponseLoggingFilter(LogDetail.BODY));
-
-
-
-    }
+       RestAssured.filters(new RequestLoggingFilter(LogDetail.ALL), // отображать в консоли request
+                 new ResponseLoggingFilter(LogDetail.BODY));
+   }
 
 
     /**
@@ -41,9 +46,7 @@ public class AppTest {
 
     @Test
     public void firstpart() {
-        RestAssured
-
-                .given().pathParam("user", "2")
+        given().pathParam("user", "2")
                 .baseUri("https://reqres.in/api")
                 .when().get("/users/{user}")
                 .then().statusCode(200);
@@ -51,8 +54,7 @@ public class AppTest {
 
     @Test
     public void secondpart() {
-        RestAssured
-                .given().baseUri("https://reqres.in/api/")
+        given().baseUri("https://reqres.in/api/")
                 .given().queryParam("page", "2")
                 .when().get("users")
                 .then().statusCode(SC_OK);
@@ -70,9 +72,7 @@ public class AppTest {
                 .setBaseUri("https://reqres.in/api/users")
                 .build();
 
-        RestAssured
-
-                .given().spec(rq)
+        given().spec(rq)
                 .queryParam("page", "2")
                 .when().get()
                 .then().spec(rs);
@@ -91,12 +91,42 @@ public class AppTest {
                 .build();
 
 
-        RestAssured
-                .given().spec(rq).pathParam("us","23")
+        given().spec(rq).pathParam("us","23")
                 .when().get("{us}")
                 .then().spec(rs);
 
     }
+
+
+
+
+    @Data
+    @Builder
+    static class User {
+        private String name;
+        private String job;
+    }
+
+    @Test
+
+    public void five() {
+        User user = User.builder().name("morpheus")
+                .job("leader").build();
+
+        given()
+                .baseUri("https://reqres.in/api/users")
+                .contentType(ContentType.JSON)
+                .body(user.toString())
+                .log().all()
+                .post();
+                //.then().statusCode(SC_CREATED);
+    }
+
+
+
+
+
+
 
 
 }
