@@ -21,6 +21,7 @@ import lombok.*;
 
 
 
+
 /*import org.apache.Http;*/
 
 
@@ -92,12 +93,11 @@ public class AppTest {
 
 
         given().spec(rq).pathParam("us","23")
-                .when().get("{us}")
+                .when()
+                .get("{us}")
                 .then().spec(rs);
 
     }
-
-
 
 
     @Data
@@ -107,8 +107,12 @@ public class AppTest {
         private String job;
     }
 
-    @Test
 
+
+
+
+
+    @Test
     public void five() {
         User user = User.builder().name("morpheus")
                 .job("leader").build();
@@ -116,7 +120,7 @@ public class AppTest {
         given()
                 .baseUri("https://reqres.in/api/users")
                 .contentType(ContentType.JSON)
-                .body(user.toString())
+                .body(user)
                 .log().all()
                 .post();
                 //.then().statusCode(SC_CREATED);
