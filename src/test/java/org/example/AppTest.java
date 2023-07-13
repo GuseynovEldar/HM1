@@ -28,6 +28,8 @@ import static org.hamcrest.Matchers.oneOf;
 
 
 import lombok.*;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,24 +60,30 @@ public class AppTest {
      * Rigorous Test :-)
      */
 
+
     @Test
+    @DisplayName("RestAssured DZ 1 zadanie 1")
     public void firstpart() {
         given().pathParam("user", "2")
                 .baseUri("https://reqres.in/api")
                 .when().get("/users/{user}")
                 .then().statusCode(200);
+        System.out.println("Запуск теста dz 1 zadanie 1");
     }
 
     @Test
+    @DisplayName("RestAssured DZ 1 zadanie 2")
     public void secondpart() {
         given().baseUri("https://reqres.in/api/")
                 .given().queryParam("page", "2")
                 .when().get("users")
                 .then().statusCode(SC_OK);
+        System.out.println("Запуск теста dz 1 zadanie 2");
 
     }
 
     @Test
+    @DisplayName("RestAssured DZ 1 zadanie 3")
     public void third() {
 
         ResponseSpecification rs = new ResponseSpecBuilder()
@@ -90,10 +98,12 @@ public class AppTest {
                 .queryParam("page", "2")
                 .when().get()
                 .then().spec(rs);
+        System.out.println("Запуск теста dz 1 zadanie 3");
 
     }
 
     @Test
+    @DisplayName("RestAssured DZ 1 zadanie 4")
     public void fourth() {
 
         RequestSpecification rq = new RequestSpecBuilder()
@@ -110,6 +120,8 @@ public class AppTest {
                 .get("{us}")
                 .then().spec(rs);
 
+        System.out.println("Запуск теста dz 1 zadanie 4");
+
     }
 
 
@@ -122,7 +134,8 @@ public class AppTest {
 
 
     @Test
-    public void five() {
+    @DisplayName("RestAssured DZ 1 zadanie 5")
+    public void fifth() {
         User user = User.builder().name("morpheus")
                 .job("leader").build();
 
@@ -130,13 +143,16 @@ public class AppTest {
                 .baseUri("https://reqres.in/api/users")
                 .contentType(ContentType.JSON)
                 .body(user)
-                .log().all()
+                //.log().all()
                 .post();
         //.then().assertThat().cookie("Content-Length", "84");
+
+        System.out.println("Запуск теста dz 1 zadanie 5");
     }
 
 
     @Test
+    @DisplayName("RestAssured DZ 2 zadanie 1")
     public void dz8_1() {
         User user = User.builder().name("morpheus")
                 .job("leader").build();
@@ -145,15 +161,18 @@ public class AppTest {
                 .baseUri("https://reqres.in/api/users")
                 .contentType(ContentType.JSON)
                 .body(user)
-                .log().all()
+               // .log().all()
                 .post()
                 .then()
                 //.assertThat().header("Accept", "*/*") - ругается, решил проверять другую куку
                 .assertThat().header("Content-Length", "84")
                 .assertThat().contentType(ContentType.JSON);
+
+        System.out.println("Запуск теста dz 2 zadanie 1");
     }
 
     @Test
+    @DisplayName("RestAssured DZ 2 zadanie 2")
     public void dz8_2() {
         given().baseUri("https://reqres.in/api/")
                 .given().queryParam("page", "2")
@@ -163,6 +182,8 @@ public class AppTest {
                 .assertThat().statusLine(containsString("HTTP/1.1"))
                 .body("support.url", response -> equalTo("https://reqres.in/#support-heading"))
                 .body("support.text", response -> equalTo("To keep ReqRes free, contributions towards server costs are appreciated!"));
+
+        System.out.println("Запуск теста dz 2 zadanie 2");
     }
 
 
@@ -252,6 +273,8 @@ public class AppTest {
 
 
     @Test
+    @DisplayName("RestAssured DZ 2 zadanie 3 плохая версия")
+    @Disabled ("По какой-то причине не отключает")
     public void dz8_3() {
         Codebeautify namana = given()
                 .when()
@@ -262,29 +285,34 @@ public class AppTest {
         //(namana.SupportObject.text).equals(supText)
         Assert.assertEquals(namana.SupportObject.text, supText);
 
-
+        System.out.println("Запуск теста dz 2 zadanie 3 плохая версия");
     }
 
 
 
     @Test
+    @DisplayName("RestAssured DZ 2 zadanie 4 1-ая часть")
     public void dz8_4_1() {
         Response response = RestAssured.get("http://ya.ru");
         long timeRS = response.time();
-        System.out.println(timeRS + " время респонса от яндекса в миллисекундах");
+        // System.out.println(timeRS + " время респонса от яндекса в миллисекундах");
+
+        System.out.println("Запуск теста dz 2 zadanie 4 1-ая часть");
     }
 
     @Test
+    @DisplayName("RestAssured DZ 2 zadanie 4 2-ая часть")
     public void dz8_4_2() {
         given().baseUri("http://ya.ru")
                 .given()
                 .when().get("http://ya.ru")
                 .then().time(lessThan(900L));
-
+        System.out.println("Запуск теста dz 2 zadanie 4 2-ая часть");
     }
 
     String supText = "To keep ReqRes free, contributions towards server costs are appreciated!";
     @Test
+    @DisplayName("RestAssured DZ 2 zadanie 3 исправленная версия")
     //@JsonIgnoreProperties(ignoreUnknown = true)
     public void dz8_part_3_pojo()
     {
@@ -296,6 +324,8 @@ public class AppTest {
                 .extract().body().as(pojo.class);
         //System.out.println(ones.support);
         Assert.assertEquals(ones.support.text, supText);
+
+        System.out.println("Запуск теста dz 2 zadanie 3 исправленная версия");
 
     }
 

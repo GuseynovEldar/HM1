@@ -8,6 +8,6 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class Support {
-    public String url;
+    private String url;
     public String text;
 }
