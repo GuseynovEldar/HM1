@@ -14,12 +14,12 @@ import org.example.Support;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+
 
 
 
 //@JsonIgnoreProperties(ignoreUnknown = true)
-public class pojo {
+public class Pojo {
 
     private float page;
     private float per_page;

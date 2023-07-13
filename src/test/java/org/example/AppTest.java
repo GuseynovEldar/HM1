@@ -15,8 +15,9 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.example.pojo;
+import org.example.Pojo;
 import org.example.Support;
 
 import static io.restassured.RestAssured.given;
@@ -274,7 +275,7 @@ public class AppTest {
 
     @Test
     @DisplayName("RestAssured DZ 2 zadanie 3 плохая версия")
-    @Disabled ("По какой-то причине не отключает")
+    @Ignore("По какой-то причине не отключает")
     public void dz8_3() {
         Codebeautify namana = given()
                 .when()
@@ -316,14 +317,14 @@ public class AppTest {
     //@JsonIgnoreProperties(ignoreUnknown = true)
     public void dz8_part_3_pojo()
     {
-        pojo ones = given()
+        Pojo ones = given()
                 .relaxedHTTPSValidation()
                 .when()
                 .get("https://reqres.in/api/users?page=2")
                 .then()
-                .extract().body().as(pojo.class);
+                .extract().body().as(Pojo.class);
         //System.out.println(ones.support);
-        Assert.assertEquals(ones.support.text, supText);
+        Assert.assertEquals("сравнение с supText",ones.getSupport().getText(), supText);
 
         System.out.println("Запуск теста dz 2 zadanie 3 исправленная версия");
 
