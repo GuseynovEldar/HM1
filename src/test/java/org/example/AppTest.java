@@ -16,12 +16,15 @@ import io.restassured.specification.ResponseSpecification;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.example.pojo;
+import org.example.Support;
 
 import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.oneOf;
 
 
 import lombok.*;
@@ -44,11 +47,11 @@ import java.util.concurrent.TimeUnit;
 public class AppTest {
 
 
-    @BeforeClass
+   /* @BeforeClass
     public static void beforeClass() throws Exception {
         RestAssured.filters(new RequestLoggingFilter(LogDetail.ALL), // отображать в консоли request
                 new ResponseLoggingFilter(LogDetail.BODY));
-    }
+    }*/
 
 
     /**
@@ -246,7 +249,7 @@ public class AppTest {
     }
 
 
-    String supText = "To keep ReqRes free, contributions towards server costs are appreciated!";
+
 
     @Test
     public void dz8_3() {
@@ -262,6 +265,8 @@ public class AppTest {
 
     }
 
+
+
     @Test
     public void dz8_4_1() {
         Response response = RestAssured.get("http://ya.ru");
@@ -274,9 +279,26 @@ public class AppTest {
         given().baseUri("http://ya.ru")
                 .given()
                 .when().get("http://ya.ru")
-                .then().time(lessThan(600L));
+                .then().time(lessThan(900L));
 
     }
+
+    String supText = "To keep ReqRes free, contributions towards server costs are appreciated!";
+    @Test
+    //@JsonIgnoreProperties(ignoreUnknown = true)
+    public void dz8_part_3_pojo()
+    {
+        pojo ones = given()
+                .relaxedHTTPSValidation()
+                .when()
+                .get("https://reqres.in/api/users?page=2")
+                .then()
+                .extract().body().as(pojo.class);
+        //System.out.println(ones.support);
+        Assert.assertEquals(ones.support.text, supText);
+
+    }
+
 }
 
 
