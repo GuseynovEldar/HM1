@@ -20,8 +20,6 @@ import static org.hamcrest.Matchers.lessThan;
 
 
 import lombok.*;
-import org.junit.*;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -40,7 +38,7 @@ import java.util.ArrayList;
  */
 
 
-
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AppTest {
 
 
@@ -52,25 +50,25 @@ public class AppTest {
      }*/
 
 
-    @BeforeClass
-    public static void beforeallmethod() throws Exception
+    @BeforeAll
+    public static void beforeallmethod()
     {
-            System.out.println("BeforeAll method called");
+            System.out.println("BeforeAll вызов метода");
     }
 
-    @AfterClass
-    public static void afterallmethod(){
-        System.out.println("AfterEach method called");
+    @AfterAll
+    public void afterallmethod(){
+        System.out.println("AfterALL вызов метода");
     }
 
     @BeforeEach
-    public static void beforeeachmethod(){
-        System.out.println("BeforeEach method called");
+    public void beforeeachmethod(){
+        System.out.println("BeforeEach вызов метода");
     }
 
     @AfterEach
-    public static void aftereachmethod(){
-        System.out.println("AfterEach method called");
+    public void aftereachmethod(){
+        System.out.println("AfterEACH вызов метода");
     }
 
 
@@ -80,6 +78,7 @@ public class AppTest {
 
     @Test
     @Tag("DZ1")
+    @Disabled("Отключенный DZ 1 zadanie 1")
     @DisplayName("RestAssured DZ 1 zadanie 1")
     public void firstpart() {
         given().pathParam("user", "2")
@@ -90,7 +89,8 @@ public class AppTest {
     }
 
     @Test
-    @Tag("DZ1")
+    @Disabled("Отключенный DZ 1 zadanie 2")
+    @Tag("DZ2")
     @DisplayName("RestAssured DZ 1 zadanie 2")
     public void secondpart() {
         given().baseUri("https://reqres.in/api/")
@@ -102,6 +102,7 @@ public class AppTest {
     }
 
     @Test
+    @Disabled("Отключенный DZ 1 zadanie 3")
     @Tag("DZ1")
     @DisplayName("RestAssured DZ 1 zadanie 3")
     public void third() {
@@ -124,6 +125,7 @@ public class AppTest {
 
     @Test
     @Tag("DZ1")
+    @Disabled("Отключенный DZ 1 zadanie 4")
     @DisplayName("RestAssured DZ 1 zadanie 4")
     public void fourth() {
 
@@ -155,6 +157,7 @@ public class AppTest {
 
 
     @Test
+    @Disabled("Отключенный DZ 1 zadanie 5")
     @DisplayName("RestAssured DZ 1 zadanie 5")
     public void fifth() {
         User user = User.builder().name("morpheus")
@@ -174,6 +177,7 @@ public class AppTest {
 
     @Test
     @Tag("DZ2")
+    @Disabled("Отключенный DZ 2 zadanie 1")
     @DisplayName("RestAssured DZ 2 zadanie 1")
     public void dz8_1() {
         User user = User.builder().name("morpheus")
@@ -194,6 +198,7 @@ public class AppTest {
     }
 
     @Test
+    @Disabled("Отключенный DZ 2 zadanie 2")
     @Tag("DZ2")
     @DisplayName("RestAssured DZ 2 zadanie 2")
     public void dz8_2() {
@@ -298,7 +303,7 @@ public class AppTest {
     @Test
     @Tag("DZ2")
     @DisplayName("RestAssured DZ 2 zadanie 3 плохая версия")
-    @Ignore("Отключенный dz8_3")
+    @Disabled("Отключенный dz8_3")
     public void dz8_3() {
         Codebeautify namana = given()
                 .when()
@@ -307,7 +312,9 @@ public class AppTest {
                 .extract().body().as(Codebeautify.class);
         //System.out.println(namana.SupportObject.text);
         //(namana.SupportObject.text).equals(supText)
-        Assert.assertEquals(namana.SupportObject.text, supText);
+
+        Assertions.assertEquals(namana.SupportObject.text, supText);
+
 
         System.out.println("Запуск теста dz 2 zadanie 3 плохая версия");
     }
@@ -315,7 +322,8 @@ public class AppTest {
 
 
     @Test
-    @Tag("DZ2")
+    @Disabled("Отключенный DZ 1 zadanie 4 1-ая часть")
+    @Tag("Тэг2")
     @DisplayName("RestAssured DZ 2 zadanie 4 1-ая часть")
     public void dz8_4_1() {
         Response response = RestAssured.get("http://ya.ru");
@@ -327,6 +335,7 @@ public class AppTest {
 
     @Test
     @Tag("DZ2")
+    @Disabled("Отключенный DZ 1 zadanie 4 2-ая часть")
     @DisplayName("RestAssured DZ 2 zadanie 4 2-ая часть")
     public void dz8_4_2() {
         given().baseUri("http://ya.ru")
@@ -338,6 +347,7 @@ public class AppTest {
 
     String supText = "To keep ReqRes free, contributions towards server costs are appreciated!";
     @Test
+    @Disabled("Отключенный DZ 2 zadanie fix")
     @Tag("DZ2")
     @DisplayName("RestAssured DZ 2 zadanie 3 исправленная версия")
     //@JsonIgnoreProperties(ignoreUnknown = true)
@@ -350,14 +360,14 @@ public class AppTest {
                 .then()
                 .extract().body().as(Pojo.class);
         //System.out.println(ones.support);
-        Assert.assertEquals("сравнение с supText",ones.getSupport().getText(), supText);
+        Assertions.assertEquals(ones.getSupport().getText(), supText);
 
         System.out.println("Запуск теста dz 2 zadanie 3 исправленная версия");
 
     }
 
     @Test
-    @Tag("DZ 4 JUNIT 1 part")
+    @Tag("DZ4_1")
     @DisplayName("Сравнение, проверка на нулл")
     //@JsonIgnoreProperties(ignoreUnknown = true)
     public void dz4_1 () {
@@ -375,16 +385,17 @@ public class AppTest {
     }
 
     @Test
-    @Tag("DZ 4 JUNIT 2 part")
+    @Tag("DZ4_2")
     @DisplayName("Ассерт фэйл")
     public void dz4_2 () {
         String city1 = "Москва";
 
         Assertions.assertNotNull(city1);
-        //Assertions.fail("ассерт фэйл");
+        Assertions.fail("ассерт фэйл");
         System.out.println("city1 не нулл");
 
     }
+
 
 
 
