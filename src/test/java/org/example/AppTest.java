@@ -6,35 +6,28 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.filter.log.LogDetail;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.example.Pojo;
-import org.example.Support;
+
 
 import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
-import static org.hamcrest.Matchers.oneOf;
 
 
 import lombok.*;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.*;
+import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+
+import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 
 
@@ -47,22 +40,46 @@ import java.util.concurrent.TimeUnit;
  */
 
 
+
 public class AppTest {
 
 
-   /* @BeforeClass
-    public static void beforeClass() throws Exception {
-        RestAssured.filters(new RequestLoggingFilter(LogDetail.ALL), // отображать в консоли request
-                new ResponseLoggingFilter(LogDetail.BODY));
-    }*/
+
+     /*@BeforeClass
+     public static void beforeClass() throws Exception {
+         RestAssured.filters(new RequestLoggingFilter(LogDetail.ALL), // отображать в консоли request
+                 new ResponseLoggingFilter(LogDetail.BODY));
+     }*/
 
 
-    /**
-     * Rigorous Test :-)
-     */
+    @BeforeClass
+    public static void beforeallmethod() throws Exception
+    {
+            System.out.println("BeforeAll method called");
+    }
+
+    @AfterClass
+    public static void afterallmethod(){
+        System.out.println("AfterEach method called");
+    }
+
+    @BeforeEach
+    public static void beforeeachmethod(){
+        System.out.println("BeforeEach method called");
+    }
+
+    @AfterEach
+    public static void aftereachmethod(){
+        System.out.println("AfterEach method called");
+    }
+
+
+
+
 
 
     @Test
+    @Tag("DZ1")
     @DisplayName("RestAssured DZ 1 zadanie 1")
     public void firstpart() {
         given().pathParam("user", "2")
@@ -73,6 +90,7 @@ public class AppTest {
     }
 
     @Test
+    @Tag("DZ1")
     @DisplayName("RestAssured DZ 1 zadanie 2")
     public void secondpart() {
         given().baseUri("https://reqres.in/api/")
@@ -84,6 +102,7 @@ public class AppTest {
     }
 
     @Test
+    @Tag("DZ1")
     @DisplayName("RestAssured DZ 1 zadanie 3")
     public void third() {
 
@@ -104,6 +123,7 @@ public class AppTest {
     }
 
     @Test
+    @Tag("DZ1")
     @DisplayName("RestAssured DZ 1 zadanie 4")
     public void fourth() {
 
@@ -153,6 +173,7 @@ public class AppTest {
 
 
     @Test
+    @Tag("DZ2")
     @DisplayName("RestAssured DZ 2 zadanie 1")
     public void dz8_1() {
         User user = User.builder().name("morpheus")
@@ -173,6 +194,7 @@ public class AppTest {
     }
 
     @Test
+    @Tag("DZ2")
     @DisplayName("RestAssured DZ 2 zadanie 2")
     public void dz8_2() {
         given().baseUri("https://reqres.in/api/")
@@ -274,8 +296,9 @@ public class AppTest {
 
 
     @Test
+    @Tag("DZ2")
     @DisplayName("RestAssured DZ 2 zadanie 3 плохая версия")
-    @Ignore("По какой-то причине не отключает")
+    @Ignore("Отключенный dz8_3")
     public void dz8_3() {
         Codebeautify namana = given()
                 .when()
@@ -292,6 +315,7 @@ public class AppTest {
 
 
     @Test
+    @Tag("DZ2")
     @DisplayName("RestAssured DZ 2 zadanie 4 1-ая часть")
     public void dz8_4_1() {
         Response response = RestAssured.get("http://ya.ru");
@@ -302,6 +326,7 @@ public class AppTest {
     }
 
     @Test
+    @Tag("DZ2")
     @DisplayName("RestAssured DZ 2 zadanie 4 2-ая часть")
     public void dz8_4_2() {
         given().baseUri("http://ya.ru")
@@ -313,6 +338,7 @@ public class AppTest {
 
     String supText = "To keep ReqRes free, contributions towards server costs are appreciated!";
     @Test
+    @Tag("DZ2")
     @DisplayName("RestAssured DZ 2 zadanie 3 исправленная версия")
     //@JsonIgnoreProperties(ignoreUnknown = true)
     public void dz8_part_3_pojo()
@@ -329,6 +355,41 @@ public class AppTest {
         System.out.println("Запуск теста dz 2 zadanie 3 исправленная версия");
 
     }
+
+    @Test
+    @Tag("DZ 4 JUNIT 1 part")
+    @DisplayName("Сравнение, проверка на нулл")
+    //@JsonIgnoreProperties(ignoreUnknown = true)
+    public void dz4_1 () {
+        String username1 = "Иван";
+        String username2 = "Иван";
+        String username3 = null;
+
+        Assertions.assertEquals( username1, username2, "username1 = username2");
+        System.out.println("username1 = username2");
+
+        Assertions.assertNull(username3);
+        //Assertions.fail("ассерт фэйл");
+        System.out.println("username3 = null");
+
+    }
+
+    @Test
+    @Tag("DZ 4 JUNIT 2 part")
+    @DisplayName("Ассерт фэйл")
+    public void dz4_2 () {
+        String city1 = "Москва";
+
+        Assertions.assertNotNull(city1);
+        //Assertions.fail("ассерт фэйл");
+        System.out.println("city1 не нулл");
+
+    }
+
+
+
+
+
 
 }
 
